@@ -1,21 +1,15 @@
 import json
-from ensurepip import bootstrap
+
 
 from kafka import KafkaAdminClient
 from kafka_producer import Kafka_pruducer
 from files_loader import get_the_data
-from helpers import Cleaner
 
 class Manager:
-    def __init__(self):
-        self.cleaner = Cleaner()
 
     def run(self):
         data = get_the_data()        # get the json files with the data
-
-        # cleand_data = self.normalize(data)
         self.build_producer_and_publish_message('localhost:9092',"interesting", data)
-
 
     def build_producer_and_publish_message(self ,bootstrap_servers,topic,msg):
         producer = Kafka_pruducer(bootstrap_servers)

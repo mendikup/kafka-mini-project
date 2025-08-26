@@ -1,6 +1,6 @@
 import os
 import json
-import random
+
 
 def get_the_data():
     project_root = os.path.dirname(os.path.abspath(__file__))
