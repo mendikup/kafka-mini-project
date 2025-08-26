@@ -1,7 +1,6 @@
 import datetime
 from consumer import Consumer
 from dal import Dal
-# from main import manager
 
 
 class Manager:
@@ -9,24 +8,34 @@ class Manager:
         self.dal = Dal()
 
     def get_consume(self):
-        events = Consumer.get_consumer_events()
-        messages = []
 
-        for event in events:
-            messages += event.value
+        consumer = Consumer.get_consumer_events()
+        processed_count = 0
 
-        result = {
-            "timestamp": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            "messages": messages
-        }
+        try:
+            for event in consumer:
+                document = {
+                    "timestamp": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                    "messages": event.value
+                }
+                if document['messages']:
+                    self.dal.insert_data(document)
+                    processed_count += 1
 
-        if result['messages']:
-            self.dal.insert_data(result)
-            return {"status": "data has been inserted"}
-        return {"status": "there is no data to insert"}
+        except Exception as e:
+            print(f"Consumer error: {e}")
+        finally:
+            try:
+                # Ensure the consumer still "alive" before closing
+                if consumer and hasattr(consumer, '_client'):
+                    consumer.close()
+            except Exception as e:
+                print(f"Error closing consumer: {e}")
+
+        return {"status": f"processed {processed_count} messages"}
 
     def get_all_data(self) -> list:
         return self.dal.get_all_data()
 
-m =Manager()
-m.get_consume()
+m = Manager()
+print(m.get_consume())
