@@ -16,7 +16,7 @@ docker run -d --name kafka --hostname kafka --network 20news-net `
   -p 9092:9092 bitnami/kafka:3.7
 
 @REM  MongoDB
-docker run -d --name mongo --hostname mongo --network 20news-net `
+docker run -d --name my_mongo --hostname mongo --network 20news-net `
   -p 27017:27017 -v mongo_data:/data/db mongo:7
 
 @REM build images
