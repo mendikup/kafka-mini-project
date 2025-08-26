@@ -4,13 +4,11 @@ from helpers import convert_bson_types
 
 
 app = FastAPI()
-
 manager = Manager()
 
 @app.get("/consume")
 def consume():
-
-    return manager.consume()
+    return manager.get_consume()
 
 @app.get("/all_data")
 def get_all_data():

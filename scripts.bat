@@ -4,6 +4,9 @@ docker network create 20news-net
 @REM create volume
 docker volume create mongo_data
 
+docker run -d -p 9092:9092 --network 20news-net --name broker apache/kafka:latest
+
+
 @REM run Kafka
 docker run -d --name kafka --hostname kafka --network 20news-net `
   -e KAFKA_CFG_NODE_ID=1 `

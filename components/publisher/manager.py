@@ -1,5 +1,7 @@
 import json
+from ensurepip import bootstrap
 
+from kafka import KafkaAdminClient
 from kafka_producer import Kafka_pruducer
 from files_loader import get_the_data
 from helpers import Cleaner
@@ -21,4 +23,6 @@ class Manager:
 
 
 m =Manager()
+# admin =KafkaAdminClient(bootstrap_servers=['localhost:9092'])
+# print(admin.list_topics())
 m.run()
