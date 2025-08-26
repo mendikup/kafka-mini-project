@@ -9,19 +9,10 @@ class Manager:
         self.cleaner = Cleaner()
 
     def run(self):
-        data = get_the_data(self)   # get the json files with the data
-        data =data[0]
-        cleand_data = self.normalize(data)
-        self.build_producer_and_publish_message('localhost:9092',"interesting", {"data":cleand_data})
+        data = get_the_data()        # get the json files with the data
 
-
-
-
-    def normalize(self ,data):
-            cleand =  []
-            cleand_data = self.cleaner.normalize_text(data)
-            cleand.append(cleand_data)
-            return cleand
+        # cleand_data = self.normalize(data)
+        self.build_producer_and_publish_message('localhost:9092',"interesting", data)
 
 
     def build_producer_and_publish_message(self ,bootstrap_servers,topic,msg):
@@ -29,3 +20,5 @@ class Manager:
         producer.publish_message_with_key(topic,msg)
 
 
+m =Manager()
+m.run()
