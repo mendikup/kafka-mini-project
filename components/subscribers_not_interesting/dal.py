@@ -7,7 +7,7 @@ class Dal:
     load_dotenv()
 
 
-    def __init__(self, collection="interesting"):
+    def __init__(self, collection="not_interesting"):
         self.db = None
         self.database = os.getenv("MONGO_DB")
         self.collection = collection

@@ -1,21 +1,16 @@
-import uvicorn
 from fastapi import FastAPI
-
-
+from manager import Manager
+from helpers import convert_bson_types
 
 
 app = FastAPI()
+manager = Manager()
 
+@app.get("/consume")
+def consume():
+    return manager.get_consume()
 
-@app.get("/")
-def root():
-    return {"status": "inserting topic_sub server is ok"}
+@app.get("/all_data")
+def get_all_data():
 
-
-@app.get("/interesting_topics")
-def get_interesting_topics():
-  pass
-
-
-if __name__=="__main__":
-    uvicorn.run("subscribe_not_interesting.main:app", host="0.0.0.0", port=8001)
+    return convert_bson_types(manager.get_all_data())

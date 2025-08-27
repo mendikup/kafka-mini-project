@@ -11,13 +11,12 @@ class Kafka_pruducer:
             json.dumps(x).encode('utf-8'))
         print(self._producer.config)
 
-    def publish_message_with_key(self, topic, messages):
+    def publish_message(self, topic, messages):
         """
         :param topic: The topic to which the message will be published
         :param message: The event message
         :return: None
         """
-
         for category, data in messages.items():
             atrticles = data
             message = atrticles.pop()
